@@ -22,21 +22,27 @@ void listenInput(
     }
 }
 
-bool isChANum(char ch) {
-    if (ch == '0' ||
-        ch == '1' ||
-        ch == '2' ||
-        ch == '3' ||
-        ch == '4' ||
-        ch == '5' ||
-        ch == '6' ||
-        ch == '7' ||
-        ch == '8' ||
-        ch == '9'
-    ) {
-        return true;
+int parseInt(std::string &numStr) {
+    std::string pureNum;
+
+    for (auto ch : numStr) {
+        if (ch == '0' ||
+            ch == '1' ||
+            ch == '2' ||
+            ch == '3' ||
+            ch == '4' ||
+            ch == '5' ||
+            ch == '6' ||
+            ch == '7' ||
+            ch == '8' ||
+            ch == '9'
+        ) {
+            pureNum += ch;
+        }
     }
-    return false;
+
+    if (pureNum == "") return 0;
+    return std::stoi(pureNum);
 }
 
 void printError() {
@@ -72,6 +78,8 @@ int main(int argc, char *argv[]) {
         printError();
         return 0;
     }
+
+    int numCol = parseInt(values[0]);
 
     return 0;
 }
