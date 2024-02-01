@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 void listenInput(
     int argc,
@@ -53,6 +54,10 @@ void printError() {
         << "--convert [INT] --next-count [INT<opt>] --next-difference [INT<opt>] --out [STR<opt>]\n";
 }
 
+double logb(double n, double b) {
+    return std::log(n) / std::log(b);
+}
+
 int main(int argc, char *argv[]) {
 
     const char ALP[26] = {
@@ -80,6 +85,15 @@ int main(int argc, char *argv[]) {
     }
 
     int numCol = parseInt(values[0]);
+
+    if (numCol <= 0) {
+        std::cerr << "\nInput column number must be greater than 0!\n";
+        return 0;
+    }
+
+    /** CONVERT */
+
+    std::cout << numCol;
 
     return 0;
 }
