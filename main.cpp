@@ -54,10 +54,6 @@ void printError() {
         << "--convert [INT] --next-count [INT<opt>] --next-difference [INT<opt>] --out [STR<opt>]\n";
 }
 
-double logb(double n, double b) {
-    return std::log(n) / std::log(b);
-}
-
 int main(int argc, char *argv[]) {
 
     const char ALP[26] = {
@@ -87,13 +83,40 @@ int main(int argc, char *argv[]) {
     int numCol = parseInt(values[0]);
 
     if (numCol <= 0) {
-        std::cerr << "\nInput column number must be greater than 0!\n";
+        std::cerr << "\nError!\nInput column number must be greater than 0.\n";
         return 0;
     }
 
-    /** CONVERT */
+    /**
+     * CONVERTION
+     *
+     * Note:
+     * The possible number of formations of the first three digits in
+     * the sequence (1D, 2D, 3D) is 26 + 26^2 + 26^3.
+     */
 
-    std::cout << numCol;
+    std::vector<std::string> alpCols = {""};
+    numCol--;
+
+    if (numCol < 26) {
+        alpCols.back() = ALP[numCol];
+    }
+    else {
+        int alp1StIdx = 26;
+
+        while (alp1StIdx > 25) {
+            numCol -= 26;
+            alp1StIdx = numCol / 26;
+            alpCols.back() = ALP[numCol % 26] + alpCols.back();
+            numCol = alp1StIdx;
+        }
+
+        alpCols.back() = ALP[alp1StIdx] + alpCols.back();
+    }
+
+    for (int i = 0; i < alpCols.size(); i++) {
+        std::cout << alpCols[i] << std::endl;
+    }
 
     return 0;
 }
