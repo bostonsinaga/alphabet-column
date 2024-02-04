@@ -1,5 +1,5 @@
 # alphabet-column
-Generate alphabet version of column index e.g. "A, B, C, ..., AA, AB, AC". This supports multiple columns.
+Generate alphabet (letters) version of column index. This supports multiple columns.
 
 **HOW TO USE:**
 
