@@ -1,6 +1,6 @@
 #include <iostream>
+#include <fstream>
 #include <vector>
-#include <cmath>
 
 void listenInput(
     int argc,
@@ -151,12 +151,56 @@ int main(int argc, char *argv[]) {
 
     /** OUTPUT */
 
-    /** Print to the screen */
+    auto displayOnScreen = [&]() {
+        std::cout << "\nRESULT:\n\n";
 
-    std::cout << "\nRESULT:\n\n";
+        for (int i = 0; i < alpCols.size(); i++) {
+            std::cout << alpCols[i] << std::endl;
+        }
+    };
 
-    for (int i = 0; i < alpCols.size(); i++) {
-        std::cout << alpCols[i] << std::endl;
+    if (values[OUT] == "" ) {
+        displayOnScreen();
+    }
+    else {
+        /** Check Existing File */
+
+        std::ifstream fileRead(values[OUT]);
+
+        if (fileRead.good()) {
+
+            std::cout << "\nWarning! The file already exists. Do you want to override it?\n(Y/N) ";
+
+            std::string isIt;
+            std::cin >> isIt;
+
+            if (isIt != "Y" && isIt != "y") {
+
+                std::cout << "\nDo you still want to display the result on the screen?\n(Y/N) ";
+
+                std::string stillDisplayResult;
+                std::cin >> stillDisplayResult;
+
+                if (stillDisplayResult == "Y" || stillDisplayResult == "y") {
+                    displayOnScreen();
+                }
+                else std::cout << "\nResult is discarded.";
+
+                return 0;
+            }
+        }
+
+        /** Write File */
+
+        std::ofstream fileWrite;
+        fileWrite.open(values[OUT]);
+
+        for (int i = 0; i < alpCols.size(); i++) {
+            fileWrite << alpCols[i] << (i < alpCols.size() - 1 ? "\n" : "");
+        }
+
+        fileWrite.close();
+        std::cout << "\nFile written to '" << values[OUT] << "'.\n";
     }
 
     return 0;
