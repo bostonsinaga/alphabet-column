@@ -24,7 +24,10 @@ void listenInput(
 }
 
 int parseInt(std::string &numStr) {
+
     std::string pureNum;
+    bool isAnyNum = false,
+         isNegative = false;
 
     for (auto ch : numStr) {
         if (ch == '0' ||
@@ -39,11 +42,15 @@ int parseInt(std::string &numStr) {
             ch == '9'
         ) {
             pureNum += ch;
+            isAnyNum = true;
+        }
+        else if (!isAnyNum && ch == '-') {
+            isNegative = true;
         }
     }
 
     if (pureNum == "") return 0;
-    return std::stoi(pureNum);
+    return std::stoi(pureNum) * (1 - isNegative * 2);
 }
 
 void printError() {
@@ -98,6 +105,10 @@ int main(int argc, char *argv[]) {
     }
     else if (alpsTotal <= 0) {
         std::cerr << "\nError!\nInput '--next-count' must be greater than 0.\n";
+        return 0;
+    }
+    else if (alpsDiff < 0) {
+        std::cerr << "\nError!\nInput '--next-difference' cannot be negative.\n";
         return 0;
     }
 
