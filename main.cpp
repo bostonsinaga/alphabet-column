@@ -63,6 +63,12 @@ int main(int argc, char *argv[]) {
 
     std::vector<std::string> values;
 
+    const int
+        CONVERT = 0,
+        NEXT_COUNT = 1,
+        NEXT_DIFFERENCE = 2,
+        OUT = 3;
+
     listenInput(
         argc, argv,
         {
@@ -75,15 +81,23 @@ int main(int argc, char *argv[]) {
     );
 
     // required
-    if (values[0] == "") {
+    if (values[CONVERT] == "") {
         printError();
         return 0;
     }
 
-    int numCol = parseInt(values[0]);
+    /** Minimum value error */
+
+    int numCol = parseInt(values[CONVERT]),
+        alpsTotal = parseInt(values[NEXT_COUNT]),
+        alpsDiff = parseInt(values[NEXT_DIFFERENCE]);
 
     if (numCol <= 0) {
-        std::cerr << "\nError!\nInput column number must be greater than 0.\n";
+        std::cerr << "\nError!\nInput '--convert' must be greater than 0.\n";
+        return 0;
+    }
+    else if (alpsTotal <= 0) {
+        std::cerr << "\nError!\nInput '--next-count' must be greater than 0.\n";
         return 0;
     }
 
@@ -95,24 +109,37 @@ int main(int argc, char *argv[]) {
      * the sequence (1D, 2D, 3D) is 26 + 26^2 + 26^3.
      */
 
-    std::vector<std::string> alpCols = {""};
+    std::vector<std::string> alpCols;
     numCol--;
 
-    if (numCol < 26) {
-        alpCols.back() = ALP[numCol];
-    }
-    else {
-        int alp1StIdx = 26;
+    for (int i = 0; i < alpsTotal; i++) {
 
-        while (alp1StIdx > 25) {
-            numCol -= 26;
-            alp1StIdx = numCol / 26;
-            alpCols.back() = ALP[numCol % 26] + alpCols.back();
-            numCol = alp1StIdx;
+        int numCol_copy = numCol;
+        alpCols.push_back("");
+        numCol += alpsDiff;
+
+        if (numCol_copy < 26) {
+            alpCols.back() = ALP[numCol_copy];
         }
+        else {
+            int alp1StIdx = 26;
 
-        alpCols.back() = ALP[alp1StIdx] + alpCols.back();
+            while (alp1StIdx > 25) {
+                numCol_copy -= 26;
+                alp1StIdx = numCol_copy / 26;
+                alpCols.back() = ALP[numCol_copy % 26] + alpCols.back();
+                numCol_copy = alp1StIdx;
+            }
+
+            alpCols.back() = ALP[alp1StIdx] + alpCols.back();
+        }
     }
+
+    /** OUTPUT */
+
+    /** Print to the screen */
+
+    std::cout << "\nRESULT:\n\n";
 
     for (int i = 0; i < alpCols.size(); i++) {
         std::cout << alpCols[i] << std::endl;
