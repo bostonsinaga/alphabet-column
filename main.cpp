@@ -87,13 +87,16 @@ int main(int argc, char *argv[]) {
         values
     );
 
-    // required
-    if (values[CONVERT] == "") {
+    /** Formation Errors */
+
+    if (values[CONVERT] == "" ||
+        (values[NEXT_COUNT] == "" && values[NEXT_DIFFERENCE] != "")
+    ) {
         printError();
         return 0;
     }
 
-    /** Minimum value error */
+    /** Minimum Value Errors */
 
     int numCol = parseInt(values[CONVERT]),
         alpsTotal = parseInt(values[NEXT_COUNT]),
@@ -103,11 +106,11 @@ int main(int argc, char *argv[]) {
         std::cerr << "\nError!\nInput '--convert' must be greater than 0.\n";
         return 0;
     }
-    else if (alpsTotal <= 0) {
-        std::cerr << "\nError!\nInput '--next-count' must be greater than 0.\n";
+    else if (values[NEXT_COUNT] != "" && alpsTotal < 0) {
+        std::cerr << "\nError!\nInput '--next-count' cannot be negative.\n";
         return 0;
     }
-    else if (alpsDiff < 0) {
+    else if (values[NEXT_DIFFERENCE] != "" && alpsDiff < 0) {
         std::cerr << "\nError!\nInput '--next-difference' cannot be negative.\n";
         return 0;
     }
@@ -123,7 +126,7 @@ int main(int argc, char *argv[]) {
     std::vector<std::string> alpCols;
     numCol--;
 
-    for (int i = 0; i < alpsTotal; i++) {
+    for (int i = 0; i < alpsTotal + 1; i++) {
 
         int numCol_copy = numCol;
         alpCols.push_back("");
