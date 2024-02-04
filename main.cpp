@@ -168,14 +168,12 @@ int main(int argc, char *argv[]) {
         std::ifstream fileRead(values[OUT]);
 
         if (fileRead.good()) {
-
-            std::cout << "\nWarning! The file already exists. Do you want to override it?\n(Y/N) ";
+            std::cout << "\nWarning! The file already exists. Do you want to overwrite it?\n(Y/N) ";
 
             std::string isIt;
             std::cin >> isIt;
 
             if (isIt != "Y" && isIt != "y") {
-
                 std::cout << "\nDo you still want to display the result on the screen?\n(Y/N) ";
 
                 std::string stillDisplayResult;
@@ -184,7 +182,7 @@ int main(int argc, char *argv[]) {
                 if (stillDisplayResult == "Y" || stillDisplayResult == "y") {
                     displayOnScreen();
                 }
-                else std::cout << "\nResult is discarded.";
+                else std::cout << "\nResult is discarded.\n";
 
                 return 0;
             }
