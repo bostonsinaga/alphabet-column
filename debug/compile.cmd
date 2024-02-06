@@ -1,1 +1,1 @@
-g++ main.cpp -o debug/alphabet-column & cd debug
+g++ ../main.cpp -o alphabet-column
