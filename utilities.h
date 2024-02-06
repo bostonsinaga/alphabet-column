@@ -1,3 +1,5 @@
+#include <cmath>
+
 namespace util {
     const char ALP[52] = {
         'A','B','C','D','E','F','G','H','I','J','K','L','M',
@@ -55,6 +57,27 @@ namespace util {
 
         if (pureNum == "") return 0;
         return std::stoi(pureNum) * (1 - isNegative * 2);
+    }
+
+    void alphabetToDecimal(std::string input) {
+        std::vector<int> alpIdx;
+
+        for (int i = 0; i < input.length(); i++) {
+            for (int j = 0; j < 52; j++) {
+                if (input[i] == ALP[j]) {
+                    alpIdx.push_back(j > 25 ? j - 25 : j + 1);
+                    break;
+                }
+            }
+        }
+
+        int index = 0;
+
+        for (int i = 0; i < alpIdx.size(); i++) {
+            index += std::pow(26, alpIdx.size() - 1 - i) * alpIdx[i];
+        }
+
+        std::cout << "\nRESULT: " << index << std::endl;
     }
 
     void printError() {
