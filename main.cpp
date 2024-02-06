@@ -8,7 +8,7 @@ int main(int argc, char *argv[]) {
 
     const int
         CONVERT = 0,
-        DECIMAL = 1
+        DECIMAL = 1,
         NEXT_COUNT = 2,
         NEXT_DIFFERENCE = 3,
         OUT = 4;
@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
         argc, argv,
         {
             "--convert",
-            "--decimal"
+            "--decimal",
             "--next-count",
             "--next-difference",
             "--out"
@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
 
     // directly process alphabet to decimal
     if (values[DECIMAL] != "") {
-        alphabetToDecimal(values[DECIMAL]);
+        util::alphabetToDecimal(values[DECIMAL]);
         return 0;
     }
 
